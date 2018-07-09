@@ -35,8 +35,8 @@ public Action Command_GOTVRecorder(int client, int args) {
 }
 
 public void ToggleRec(int rec) {
-	char timeBuffer[10];
-	IntToString(GetTime(), timeBuffer, 10);
+	char timeBuffer[11];
+	IntToString(GetTime(), timeBuffer, 11);
 
 	switch(rec) {
 		case 0: { // stop
