@@ -1,0 +1,109 @@
+// To use this file, rename it to GameModes_Server.txt
+//
+// Values here override the default gamemodes.txt 
+
+"GameModes_Server.txt"{
+"gameTypes"{"classic"{"gameModes"{
+	
+	"casual"
+	{
+		"mapgroupsMP"
+		{
+			"mg_mycasual" ""
+		}
+		maxplayers "20"
+	}
+	"competitive"
+	{
+		"mapgroupsMP"
+		{
+			"mg_mycasual" ""
+		}
+		maxplayers "20"
+	}
+	"competitive2v2"
+	{
+		"mapgroupsMP"
+		{
+			"mg_mywingman" ""
+		}
+		maxplayers "20"
+	}
+
+}}
+"gungame"{"gameModes"{
+
+	"gungameprogressive"
+	{
+		"mapgroupsMP"
+		{
+			"mg_mycasual" ""
+		}
+		maxplayers "20"
+	}
+	"deathmatch"
+	{
+		"mapgroupsMP"
+		{
+			"mg_mycasual" ""
+		}
+		maxplayers "20"
+	}
+}}
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+// Map groups
+//
+// To use a mapgroup, it needs to be defined in a keyvalues
+// block such as the example below, as well as listed in the 
+// 'mapgroupsMP' block within the game mode that will run it,
+// such as the example above.
+//
+// Then launch the server with '+mapgroup MAPGROUPNAME'
+//
+// Example:
+//
+// srcds -game csgo +game_mode 1 +mapgroup mg_bomb_se +map de_nuke_se
+//
+//
+// Check the developer wiki for updated community info
+// https://developer.valvesoftware.com/wiki/Counter-Strike:_Global_Offensive_Dedicated_Servers
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+	"mapgroups"
+	{
+		"mg_mycasual"
+		{
+			"name"	"mg_mycasual"
+			"maps"
+			{
+				"de_inferno"	""
+				"de_mirage"	""
+				"de_train"	""
+				"de_cache"	""
+				"de_cbble"	""
+				"de_overpass"	""
+				"de_nuke"	""
+			}
+		}
+
+		"mg_mywingman"
+		{
+			"name"	"mg_mywingman"
+			"maps"
+			{
+				"killhouse"	""
+				"de_overpass"	""
+				"de_cbble"	""
+				"de_lake"	""
+				"de_safehouse"	""
+				"de_shortdust"	""
+				"de_train"	""
+				"de_inferno"	""
+				"de_shortnuke"	""
+				"de_beerhouse"	""
+			}
+		}
+	}
+}
