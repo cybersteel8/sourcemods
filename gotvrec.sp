@@ -7,12 +7,13 @@ public Plugin myinfo = {
 	name = "GOTV Recorder",
 	author = "Psymon",
 	description = "",
-	version = "0.0.1",
+	version = "0.0.3",
 	url = ""
 };
 
 public void OnPluginStart() {
 	RegConsoleCmd("sm_rec", Command_GOTVRecorder);
+	RegConsoleCmd("sm_demo", Command_GOTVRecorder);
 }
 
 public Action Command_GOTVRecorder(int client, int args) {
@@ -34,8 +35,8 @@ public Action Command_GOTVRecorder(int client, int args) {
 }
 
 public void ToggleRec(int rec) {
-	char timeBuffer[10];
-	IntToString(GetTime(), timeBuffer, 10);
+	char timeBuffer[11];
+	IntToString(GetTime(), timeBuffer, 11);
 
 	switch(rec) {
 		case 0: { // stop

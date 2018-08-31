@@ -5,7 +5,7 @@ public Plugin myinfo = {
 	name = "Gamemode Changer",
 	author = "Psymon",
 	description = "",
-	version = "0.0.2",
+	version = "0.0.3",
 	url = ""
 };
 
@@ -26,6 +26,12 @@ public Action Command_Gamechange(int client, int args) {
 		else if(StrEqual(buffer, "armsrace", false)) {
 			SetGameMode(2);		
 		}
+		else if(StrEqual(buffer, "competitive", false)) {
+			SetGameMode(3);
+		}
+		else if(StrEqual(buffer, "deathmatch", false)) {
+			SetGameMode(4);
+		}
 		else {
 			PrintToChatAll("[SM] Invalid Argument: %s", buffer);
 			PrintToServer("[SM] Invalid Argument: %s", buffer);
@@ -37,6 +43,8 @@ public Action Command_Gamechange(int client, int args) {
 		menu.AddItem("1", "Casual");
 		menu.AddItem("2", "Wingman");
 		menu.AddItem("3", "Arms Race");
+		menu.AddItem("4", "Competitive");
+		menu.AddItem("5", "Deathmatch");
 		DisplayMenu(menu, client, 9999);
 	}
 	return Plugin_Handled;
@@ -66,11 +74,23 @@ public void SetGameMode(int mode) {
 			cvGameType.IntValue = 0;
 			cvGameMode.IntValue = 2;
 		}
-		case 2: {
+		case 2: { // armsrace
 			PrintToChatAll("[SM] Changing gamemode to Arms Race...");
 			PrintToServer("[SM] Changing gamemode to Arms Race...");
 			cvGameType.IntValue = 1;
 			cvGameMode.IntValue = 0;
+		}
+		case 3: { // competitive
+			PrintToChatAll("[SM] Changing gamemode to Competitive...");
+			PrintToServer("[SM] Changing gamemode to Competitive...");
+			cvGameType.IntValue = 0;
+			cvGameMode.IntValue = 1;
+		}
+		case 4: { // deathmatch
+			PrintToChatAll("[SM] Changing gamemode to Deathmatch...");
+			PrintToServer("[SM] Changing gamemode to Deathmatch...");
+			cvGameType.IntValue = 1;
+			cvGameMode.IntValue = 2;
 		}
 	}
 }
