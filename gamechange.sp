@@ -5,7 +5,7 @@ public Plugin myinfo = {
 	name = "Gamemode Changer",
 	author = "Psymon",
 	description = "",
-	version = "0.0.3",
+	version = "0.0.4",
 	url = ""
 };
 
@@ -18,13 +18,19 @@ public Action Command_Gamechange(int client, int args) {
 	if(args > 0) {
 		GetCmdArg(1, buffer, 12);
 		if(StrEqual(buffer, "casual", false)) {
-			SetGameMode(0);
+			SetGameMode(0, client);
 		}
 		else if(StrEqual(buffer, "wingman", false)) {
-			SetGameMode(1);
+			SetGameMode(1, client);
 		}
 		else if(StrEqual(buffer, "armsrace", false)) {
-			SetGameMode(2);		
+			SetGameMode(2, client);
+		}
+		else if(StrEqual(buffer, "competitive", false)) {
+			SetGameMode(3, client);
+		}
+		else if(StrEqual(buffer, "deathmatch", false)) {
+			SetGameMode(4, client);
 		}
 		else if(StrEqual(buffer, "competitive", false)) {
 			SetGameMode(3);
@@ -38,26 +44,26 @@ public Action Command_Gamechange(int client, int args) {
 		}
 	} else {
 		PrintToServer("[SM] Showing game change menu");
-		Menu menu = new Menu(ChangeMapFromMenu);
-		menu.SetTitle("Choose Gamemode:");
-		menu.AddItem("1", "Casual");
-		menu.AddItem("2", "Wingman");
-		menu.AddItem("3", "Arms Race");
-		menu.AddItem("4", "Competitive");
-		menu.AddItem("5", "Deathmatch");
-		DisplayMenu(menu, client, 9999);
+		Menu modeMenu = new Menu(ChangeModeFromMenu);
+		modeMenu.SetTitle("Choose Gamemode:");
+		modeMenu.AddItem("1", "Casual");
+		modeMenu.AddItem("2", "Wingman");
+		modeMenu.AddItem("3", "Arms Race");
+		modeMenu.AddItem("4", "Competitive");
+		modeMenu.AddItem("5", "Deathmatch");
+		DisplayMenu(modeMenu, client, 9999);
 	}
 	return Plugin_Handled;
 }
 
-public int ChangeMapFromMenu(Menu menu, MenuAction action, int param1, int param2) {
+public int ChangeModeFromMenu(Menu menu, MenuAction action, int client, int selection) {
 	if(action == MenuAction_Select) {
-		PrintToServer("[SM] Menu option %d chosen", param2);
-		SetGameMode(param2);
+		PrintToServer("[SM] Menu option %d chosen", selection);
+		SetGameMode(selection, client);
 	}
 }
 
-public void SetGameMode(int mode) {
+public void SetGameMode(int mode, int client) {
 	ConVar cvGameType = FindConVar("game_type");
 	ConVar cvGameMode = FindConVar("game_mode");
 
@@ -91,6 +97,31 @@ public void SetGameMode(int mode) {
 			PrintToServer("[SM] Changing gamemode to Deathmatch...");
 			cvGameType.IntValue = 1;
 			cvGameMode.IntValue = 2;
+		}
+	}
+
+	// Display changelevel prompt
+	PrintToServer("[SM] Displaying Change Map Menu");
+	Menu mapMenu = new Menu(ChangeMapPromptHandler);
+	mapMenu.setTitle("Map reload is required.");
+	mapMenu.AddItem("1", "Stay on this map");
+	mapMenu.AddItem("2", "Load different map");
+	mapMenu.AddItem("3", "Cancel map change.");
+	DisplayMenu(mapMenu, client, 9999);
+}
+
+public int ChangeMapPromptHandler(Menu menu, MenuAction action, int client, int selection) {
+	if(action == MenuAction_Select) {
+		switch(selection) {
+			case 0: {
+				//stay
+			}
+			case 1: {
+				// change
+			}
+			case 2: {
+				// cancel
+			}
 		}
 	}
 }
