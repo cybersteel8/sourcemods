@@ -5,7 +5,7 @@ char fName[10];
 
 public Plugin myinfo = {
 	name = "GOTV Recorder",
-	author = "Psymon",
+	author = "cybersteel8",
 	description = "",
 	version = "0.0.3",
 	url = ""

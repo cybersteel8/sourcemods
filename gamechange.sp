@@ -3,7 +3,7 @@
 
 public Plugin myinfo = {
 	name = "Gamemode Changer",
-	author = "Psymon",
+	author = "cyberstee8",
 	description = "",
 	version = "0.0.4",
 	url = ""
