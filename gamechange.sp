@@ -5,7 +5,7 @@ public Plugin myinfo = {
 	name = "Gamemode Changer",
 	author = "cyberstee8",
 	description = "",
-	version = "0.0.4",
+	version = "0.0.5",
 	url = ""
 };
 
@@ -31,12 +31,6 @@ public Action Command_Gamechange(int client, int args) {
 		}
 		else if(StrEqual(buffer, "deathmatch", false)) {
 			SetGameMode(4, client);
-		}
-		else if(StrEqual(buffer, "competitive", false)) {
-			SetGameMode(3);
-		}
-		else if(StrEqual(buffer, "deathmatch", false)) {
-			SetGameMode(4);
 		}
 		else {
 			PrintToChatAll("[SM] Invalid Argument: %s", buffer);
@@ -103,10 +97,10 @@ public void SetGameMode(int mode, int client) {
 	// Display changelevel prompt
 	PrintToServer("[SM] Displaying Change Map Menu");
 	Menu mapMenu = new Menu(ChangeMapPromptHandler);
-	mapMenu.setTitle("Map reload is required.");
+	mapMenu.SetTitle("Map reload is required.");
 	mapMenu.AddItem("1", "Stay on this map");
 	mapMenu.AddItem("2", "Load different map");
-	mapMenu.AddItem("3", "Cancel map change.");
+	mapMenu.AddItem("3", "Do nothing");
 	DisplayMenu(mapMenu, client, 9999);
 }
 
@@ -115,13 +109,23 @@ public int ChangeMapPromptHandler(Menu menu, MenuAction action, int client, int 
 		switch(selection) {
 			case 0: {
 				//stay
+				ServerCommand("changelevel %s", currentMap());
 			}
 			case 1: {
 				// change
+				PrintToServer("[SM] Displaying sm_practicemap menu to client");
+				ClientCommand(client, "sm_practicemap");
 			}
 			case 2: {
-				// cancel
+				// do nothing
 			}
 		}
 	}
+}
+
+char[] currentMap() {
+	char[] buffer = "";
+	GetCurrentMap(buffer, 64);
+	PrintToServer("[SM] GetCurrentMap returned: %s", buffer);
+	return buffer;
 }
