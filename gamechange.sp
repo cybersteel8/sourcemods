@@ -5,7 +5,7 @@ public Plugin myinfo = {
 	name = "Gamemode Changer",
 	author = "cyberstee8",
 	description = "",
-	version = "0.0.5",
+	version = "0.0.6",
 	url = ""
 };
 
@@ -32,6 +32,9 @@ public Action Command_Gamechange(int client, int args) {
 		else if(StrEqual(buffer, "deathmatch", false)) {
 			SetGameMode(4, client);
 		}
+		else if(StrEqual(buffer, "survival", false)) {
+			SetGameMode(5, client);
+		}
 		else {
 			PrintToChatAll("[SM] Invalid Argument: %s", buffer);
 			PrintToServer("[SM] Invalid Argument: %s", buffer);
@@ -45,6 +48,7 @@ public Action Command_Gamechange(int client, int args) {
 		modeMenu.AddItem("3", "Arms Race");
 		modeMenu.AddItem("4", "Competitive");
 		modeMenu.AddItem("5", "Deathmatch");
+		modeMenu.AddItem("6", "Survival");
 		DisplayMenu(modeMenu, client, 9999);
 	}
 	return Plugin_Handled;
@@ -91,6 +95,17 @@ public void SetGameMode(int mode, int client) {
 			PrintToServer("[SM] Changing gamemode to Deathmatch...");
 			cvGameType.IntValue = 1;
 			cvGameMode.IntValue = 2;
+		}
+		case 5: { // survival
+			PrintToChatAll("[SM] Changing gamemode to Survival...");
+			PrintToServer("[SM] Changing gamemode to Survival...");
+			cvGameType.IntValue = 6;
+			cvGameMode.IntValue = 0;
+			ServerCommand("changelevel dz_blacksite");
+			return;
+		}
+		case default: {
+			return;
 		}
 	}
 
