@@ -104,7 +104,7 @@ public void SetGameMode(int mode, int client) {
 			ServerCommand("changelevel dz_blacksite");
 			return;
 		}
-		case default: {
+		default: {
 			return;
 		}
 	}
