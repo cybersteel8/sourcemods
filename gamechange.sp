@@ -16,7 +16,7 @@ public void OnPluginStart() {
 public Action Command_Gamechange(int client, int args) {
 	char[] buffer = "";
 	if(args > 0) {
-		GetCmdArg(1, buffer, 12);
+		GetCmdArg(1, buffer, 16);
 		if(StrEqual(buffer, "casual", false)) {
 			SetGameMode(0, client);
 		}
@@ -32,7 +32,7 @@ public Action Command_Gamechange(int client, int args) {
 		else if(StrEqual(buffer, "deathmatch", false)) {
 			SetGameMode(4, client);
 		}
-		else if(StrEqual(buffer, "survival", false)) {
+		else if(StrEqual(buffer, "dangerzone", false)) {
 			SetGameMode(5, client);
 		}
 		else {
@@ -48,7 +48,7 @@ public Action Command_Gamechange(int client, int args) {
 		modeMenu.AddItem("3", "Arms Race");
 		modeMenu.AddItem("4", "Competitive");
 		modeMenu.AddItem("5", "Deathmatch");
-		modeMenu.AddItem("6", "Survival");
+		modeMenu.AddItem("6", "Danger Zone");
 		DisplayMenu(modeMenu, client, 9999);
 	}
 	return Plugin_Handled;
@@ -96,9 +96,9 @@ public void SetGameMode(int mode, int client) {
 			cvGameType.IntValue = 1;
 			cvGameMode.IntValue = 2;
 		}
-		case 5: { // survival
-			PrintToChatAll("[SM] Changing gamemode to Survival...");
-			PrintToServer("[SM] Changing gamemode to Survival...");
+		case 5: { // dangerzone
+			PrintToChatAll("[SM] Changing gamemode to Danger Zone...");
+			PrintToServer("[SM] Changing gamemode to Danger Zone...");
 			cvGameType.IntValue = 6;
 			cvGameMode.IntValue = 0;
 			ServerCommand("changelevel dz_blacksite");
