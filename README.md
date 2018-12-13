@@ -13,7 +13,7 @@ Obtain my mod from the Releases section of this repository, and place the .smx f
 
 ## Compiling from source
 Download the .sp source files from the repository into your `csgo/addons/sourcemod/scripting/` directory.
-In this directory, run `./spcomp <source-file-name>` to compile the code into a `.smx.` file.
+In this directory, run `./spcomp <source-file-name>` to compile the code into a `.smx` file.
 Move this `.smx` file into `csgo/addons/sourcemod/plugins/` and restart the server.
 `sm plugins list` should have the mod you've installed listed amongst the others.
 
