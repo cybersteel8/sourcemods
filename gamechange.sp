@@ -36,11 +36,11 @@ public Action Command_Gamechange(int client, int args) {
 			SetGameMode(5, client);
 		}
 		else {
-			PrintToChatAll("[SM] Invalid Argument: %s", buffer);
-			PrintToServer("[SM] Invalid Argument: %s", buffer);
+			PrintToChatAll("[GM] Invalid Argument: %s", buffer);
+			PrintToServer("[GM] Invalid Argument: %s", buffer);
 		}
 	} else {
-		PrintToServer("[SM] Showing game change menu");
+		PrintToServer("[GM] Showing game change menu");
 		Menu modeMenu = new Menu(ChangeModeFromMenu);
 		modeMenu.SetTitle("Choose Gamemode:");
 		modeMenu.AddItem("1", "Casual");
@@ -56,7 +56,7 @@ public Action Command_Gamechange(int client, int args) {
 
 public int ChangeModeFromMenu(Menu menu, MenuAction action, int client, int selection) {
 	if(action == MenuAction_Select) {
-		PrintToServer("[SM] Menu option %d chosen", selection);
+		PrintToServer("[GM] Menu option %d chosen", selection);
 		SetGameMode(selection, client);
 	}
 }
@@ -67,38 +67,38 @@ public void SetGameMode(int mode, int client) {
 
 	switch(mode) {
 		case 0: { // casual
-			PrintToChatAll("[SM] Changing gamemode to Casual...");
-			PrintToServer("[SM] Changing gamemode to Casual...");
+			PrintToChatAll("[GM] Changing gamemode to Casual...");
+			PrintToServer("[GM] Changing gamemode to Casual...");
 			cvGameType.IntValue = 0;
 			cvGameMode.IntValue = 0;
 		}
 		case 1: { // wingman
-			PrintToChatAll("[SM] Changing gamemode to Wingman...");
-			PrintToServer("[SM] Changing gamemode to Wingman...");
+			PrintToChatAll("[GM] Changing gamemode to Wingman...");
+			PrintToServer("[GM] Changing gamemode to Wingman...");
 			cvGameType.IntValue = 0;
 			cvGameMode.IntValue = 2;
 		}
 		case 2: { // armsrace
-			PrintToChatAll("[SM] Changing gamemode to Arms Race...");
-			PrintToServer("[SM] Changing gamemode to Arms Race...");
+			PrintToChatAll("[GM] Changing gamemode to Arms Race...");
+			PrintToServer("[GM] Changing gamemode to Arms Race...");
 			cvGameType.IntValue = 1;
 			cvGameMode.IntValue = 0;
 		}
 		case 3: { // competitive
-			PrintToChatAll("[SM] Changing gamemode to Competitive...");
-			PrintToServer("[SM] Changing gamemode to Competitive...");
+			PrintToChatAll("[GM] Changing gamemode to Competitive...");
+			PrintToServer("[GM] Changing gamemode to Competitive...");
 			cvGameType.IntValue = 0;
 			cvGameMode.IntValue = 1;
 		}
 		case 4: { // deathmatch
-			PrintToChatAll("[SM] Changing gamemode to Deathmatch...");
-			PrintToServer("[SM] Changing gamemode to Deathmatch...");
+			PrintToChatAll("[GM] Changing gamemode to Deathmatch...");
+			PrintToServer("[GM] Changing gamemode to Deathmatch...");
 			cvGameType.IntValue = 1;
 			cvGameMode.IntValue = 2;
 		}
 		case 5: { // dangerzone
-			PrintToChatAll("[SM] Changing gamemode to Danger Zone...");
-			PrintToServer("[SM] Changing gamemode to Danger Zone...");
+			PrintToChatAll("[GM] Changing gamemode to Danger Zone...");
+			PrintToServer("[GM] Changing gamemode to Danger Zone...");
 			cvGameType.IntValue = 6;
 			cvGameMode.IntValue = 0;
 			ServerCommand("changelevel dz_blacksite");
@@ -110,7 +110,7 @@ public void SetGameMode(int mode, int client) {
 	}
 
 	// Display changelevel prompt
-	PrintToServer("[SM] Displaying Change Map Menu");
+	PrintToServer("[GM] Displaying Change Map Menu");
 	Menu mapMenu = new Menu(ChangeMapPromptHandler);
 	mapMenu.SetTitle("Map reload is required.");
 	mapMenu.AddItem("1", "Stay on this map");
@@ -128,7 +128,7 @@ public int ChangeMapPromptHandler(Menu menu, MenuAction action, int client, int 
 			}
 			case 1: {
 				// change
-				PrintToServer("[SM] Displaying sm_practicemap menu to client");
+				PrintToServer("[GM] Displaying sm_practicemap menu to client");
 				ClientCommand(client, "sm_practicemap");
 			}
 			case 2: {
@@ -141,6 +141,6 @@ public int ChangeMapPromptHandler(Menu menu, MenuAction action, int client, int 
 char[] currentMap() {
 	char[] buffer = "";
 	GetCurrentMap(buffer, 64);
-	PrintToServer("[SM] GetCurrentMap returned: %s", buffer);
+	PrintToServer("[GM] GetCurrentMap returned: %s", buffer);
 	return buffer;
 }
