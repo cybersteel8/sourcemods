@@ -1,6 +1,10 @@
 # sourcemods
 A collection of my server mods for CS:GO
 
+To follow the project's changes, see the [Changelog](https://github.com/cybersteel8/sourcemods/blob/dev/CHANGELOG.md) document in this repository.
+
+Please note that this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
 ---
 
 # Manual
@@ -12,9 +16,11 @@ You must be using the latest version of [Metamod](https://www.sourcemm.net/), [S
 Obtain my mod from the Releases section of this repository, and place the .smx files into your `csgo/addons/sourcemod/plugins/` directory on your CS server after installing the prerequisites.
 
 ## Compiling from source
-Download the .sp source files from the repository into your `csgo/addons/sourcemod/scripting/` directory.
-In this directory, run `./spcomp <source-file-name>` to compile the code into a `.smx` file.
-Move this `.smx` file into `csgo/addons/sourcemod/plugins/` and restart the server.
+1. Download the .sp source files from the repository into your `csgo/addons/sourcemod/scripting/` directory.
+
+2. In this directory, run `./spcomp <source-file-name>` to compile the code into a `.smx` file.
+
+3. Move this `.smx` file into `csgo/addons/sourcemod/plugins/` and restart the server.
 `sm plugins list` should have the mod you've installed listed amongst the others.
 
 ## Gamechange
@@ -32,4 +38,3 @@ Choosing to change map will engage the `.map` command from the `csgo-practice-mo
 `!demo start|stop`
 
 Both commands work the same. This will send `start` and `stop` commands the GOTV bot to begin and halt recording (`tv_record` and `tv_stoprecord` commands respectively). The demos are saved in your `csgo` folder with the filename `psy_gotv_<unix-timestamp>.dem`.
-
