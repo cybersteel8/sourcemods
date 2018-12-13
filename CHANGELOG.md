@@ -13,7 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Gamechange: Support for new Danger Zone game mode.
 ### Changed
 - This project now uses semantic versioning.
-- Info messages in chat now use mod-specific prefixes. Gamechange is [GC] and GOTVRec is [GR]. Both used to use [SM].
+- Info messages in chat now use mod-specific prefixes.
+  - Gamechange is now prefixed with [GC]
+  - GOTVRec is now prefixed with [GR].
+  - No messages are provided with [SM] prefix anymore.
 ## [0.0.3] - 2018-08-31
 ### Added
 - Gamechange: Deathmatch mode support
