@@ -27,8 +27,8 @@ public Action Command_GOTVRecorder(int client, int args) {
 			ToggleRec(0);
 		}
 		else {
-			PrintToChat(client, "[SM] Invalid Argument: %s", inputBuffer);
-			PrintToServer("[SM] Invalid Argument: %s", inputBuffer);
+			PrintToChat(client, "[GR] Invalid Argument: %s", inputBuffer);
+			PrintToServer("[GR] Invalid Argument: %s", inputBuffer);
 		}
 	}
 	return Plugin_Handled;
@@ -40,17 +40,17 @@ public void ToggleRec(int rec) {
 
 	switch(rec) {
 		case 0: { // stop
-			PrintToChatAll("[SM] Stopping GOTV Recording...");
-			PrintToServer("[SM] Stopping GOTV Recording...");
+			PrintToChatAll("[GR] Stopping GOTV Recording...");
+			PrintToServer("[GR] Stopping GOTV Recording...");
 			ServerCommand("tv_stoprecord");
-			PrintToChatAll("[SM] GOTV recording saved to psy_gotv_%s.dem", fName);
-			PrintToServer("[SM] GOTV recording saved to psy_gotv_%s.dem", fName);
+			PrintToChatAll("[GR] GOTV recording saved to psy_gotv_%s.dem", fName);
+			PrintToServer("[GR] GOTV recording saved to psy_gotv_%s.dem", fName);
 		}
 		case 1: { // start
-			PrintToChatAll("[SM] Starting GOTV Recording...");
-			PrintToServer("[SM] Starting GOTV Recording...");
+			PrintToChatAll("[GR] Starting GOTV Recording...");
+			PrintToServer("[GR] Starting GOTV Recording...");
 			ServerCommand("tv_record psy_gotv_%s", timeBuffer);
-			fName = timeBuffer;			
+			fName = timeBuffer;
 		}
 	}
 }
