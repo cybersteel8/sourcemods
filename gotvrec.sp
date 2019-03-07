@@ -6,9 +6,9 @@ char fName[10];
 public Plugin myinfo = {
 	name = "GOTV Recorder",
 	author = "cybersteel8",
-	description = "",
+	description = "Allows clients to trigger the GOTV bot",
 	version = "0.4.0",
-	url = ""
+	url = "https://github.com/cybersteel8/sourcemods/"
 };
 
 public void OnPluginStart() {

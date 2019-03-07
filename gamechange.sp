@@ -4,9 +4,9 @@
 public Plugin myinfo = {
 	name = "Gamemode Changer",
 	author = "cyberstee8",
-	description = "",
+	description = "Allows clients to change gamemode",
 	version = "0.4.0",
-	url = ""
+	url = "https://github.com/cybersteel8/sourcemods/"
 };
 
 public void OnPluginStart() {
@@ -129,7 +129,7 @@ public int ChangeMapPromptHandler(Menu menu, MenuAction action, int client, int 
 			case 1: {
 				// change
 				PrintToServer("[GM] Displaying sm_practicemap menu to client");
-				ClientCommand(client, "sm_practicemap");
+				ClientCommand(client, "sm_practicemap"); // https://github.com/splewis/csgo-practice-mode
 			}
 			case 2: {
 				// do nothing

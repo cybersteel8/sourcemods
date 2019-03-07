@@ -4,9 +4,9 @@
 public Plugin myinfo = {
 	name = "Command Pipe",
 	author = "cyberstee8",
-	description = "Custom commands",
-	version = "0.0.1",
-	url = ""
+	description = "Allows clients to execute server commands",
+	version = "0.1.0",
+	url = "https://github.com/cybersteel8/sourcemods/"
 };
 
 public void OnPluginStart() {
