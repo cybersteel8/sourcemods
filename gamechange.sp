@@ -5,7 +5,7 @@ public Plugin myinfo = {
 	name = "Gamemode Changer",
 	author = "cyberstee8",
 	description = "Allows clients to change gamemode",
-	version = "0.4.0",
+	version = "0.4.1",
 	url = "https://github.com/cybersteel8/sourcemods/"
 };
 
@@ -124,7 +124,8 @@ public int ChangeMapPromptHandler(Menu menu, MenuAction action, int client, int 
 		switch(selection) {
 			case 0: {
 				//stay
-				ServerCommand("changelevel %s", currentMap());
+				PrintToServer("[GM] Restarting map!");
+				ServerCommand("restart");
 			}
 			case 1: {
 				// change
