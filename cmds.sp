@@ -22,7 +22,7 @@ public Action Command_CmdPipe(int client, int args) {
 		}
 		else if(StrEqual(buffer, "roundtime", false)) {
 			char[] roundTime = "";
-			GetCmdArg(2, roundTime, 2)
+			GetCmdArg(2, roundTime, 6)
 			MpRoundTime(roundTime);
 		}
 		else if(StrEqual(buffer, "restartgame", false)) {
@@ -36,7 +36,7 @@ public Action Command_CmdPipe(int client, int args) {
 			PrintToServer("[CMD] Invalid Argument: %s", buffer);
 		}
 	} else {
-		PrintToChat(client, "[CMD] Possible commands: kickbots | roundtime [number] | restartgame | endwarmup");
+		PrintToChat(client, "[CMD] Possible commands: kickbots | roundtime [minutes] | restartgame | endwarmup");
 		PrintToServer("[CMD] Possible commands: kickbots | roundtime [number] | restartgame | endwarmup");
 	}
 	return Plugin_Handled;
