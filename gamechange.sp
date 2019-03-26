@@ -5,7 +5,7 @@ public Plugin myinfo = {
 	name = "Gamemode Changer",
 	author = "cyberstee8",
 	description = "Allows clients to change gamemode",
-	version = "0.4.1",
+	version = "0.5.0",
 	url = "https://github.com/cybersteel8/sourcemods/"
 };
 
@@ -13,9 +13,11 @@ public void OnPluginStart() {
 	RegConsoleCmd("sm_gm", Command_Gamechange);
 }
 
+// syntax is !gm <gamemode> <map>
 public Action Command_Gamechange(int client, int args) {
 	char[] buffer = "";
 	if(args > 0) {
+		// Check if user provided gamemode
 		GetCmdArg(1, buffer, 16);
 		if(StrEqual(buffer, "casual", false)) {
 			SetGameMode(0, client);
@@ -38,29 +40,61 @@ public Action Command_Gamechange(int client, int args) {
 		else {
 			PrintToChatAll("[GM] Invalid Argument: %s", buffer);
 			PrintToServer("[GM] Invalid Argument: %s", buffer);
+			return Plugin_Handled;
+		}
+
+		// Check if user also provided map choice
+		if(args > 1) {
+			char[] buf2 = "";
+			char[] map = "";
+			GetCmdArg(2, buf2, 16);
+			if(StrEqual(buf2, "stay", false)) {
+				PrintToServer("[GM] Staying on map!");
+				GetCurrentMap(map, 64);
+			} else {
+				PrintToServer("[GM] Changing to %s", buf2);
+				strcopy(map, 16, buf2);
+			}
+			PrintToServer("[GM] Calling changelevel %s", map);
+			ServerCommand("changelevel %s", map);	
+		} else {
+			// Map not provided, display changelevel menu
+			ChangeMapMenu(client);
 		}
 	} else {
-		PrintToServer("[GM] Showing game change menu");
-		Menu modeMenu = new Menu(ChangeModeFromMenu);
-		modeMenu.SetTitle("Choose Gamemode:");
-		modeMenu.AddItem("1", "Casual");
-		modeMenu.AddItem("2", "Wingman");
-		modeMenu.AddItem("3", "Arms Race");
-		modeMenu.AddItem("4", "Competitive");
-		modeMenu.AddItem("5", "Deathmatch");
-		modeMenu.AddItem("6", "Danger Zone");
-		DisplayMenu(modeMenu, client, 9999);
+		// Gamemode not provided, display gamechange menu
+		// mapchange menu is called inside the handler
+		ChangeModeMenu(client);
 	}
 	return Plugin_Handled;
 }
 
-public int ChangeModeFromMenu(Menu menu, MenuAction action, int client, int selection) {
+// Displays gamechange menu to user
+public void ChangeModeMenu(client) {
+	PrintToServer("[GM] Showing game change menu");
+	Menu modeMenu = new Menu(ChangeModeMenuHandler);
+	modeMenu.SetTitle("Choose Gamemode:");
+	modeMenu.AddItem("1", "Casual");
+	modeMenu.AddItem("2", "Wingman");
+	modeMenu.AddItem("3", "Arms Race");
+	modeMenu.AddItem("4", "Competitive");
+	modeMenu.AddItem("5", "Deathmatch");
+	modeMenu.AddItem("6", "Danger Zone");
+	DisplayMenu(modeMenu, client, 9999);
+}
+
+// Responds to the gamechange menu prompt
+public int ChangeModeMenuHandler(Menu menu, MenuAction action, int client, int selection) {
 	if(action == MenuAction_Select) {
 		PrintToServer("[GM] Menu option %d chosen", selection);
 		SetGameMode(selection, client);
 	}
+	// This must be called here so it only shows after the user has selected an option in the previous menu
+	// It is assumed that if the user needed the ChangeModeMenu they must need the ChangeMapMenu too.
+	ChangeMapMenu(client);
 }
 
+// Changes the cvars based on the gamemode provided
 public void SetGameMode(int mode, int client) {
 	ConVar cvGameType = FindConVar("game_type");
 	ConVar cvGameMode = FindConVar("game_mode");
@@ -108,24 +142,29 @@ public void SetGameMode(int mode, int client) {
 			return;
 		}
 	}
+}
 
-	// Display changelevel prompt
+// Prompts the user with a menu to change the map
+public void ChangeMapMenu(client) {
 	PrintToServer("[GM] Displaying Change Map Menu");
-	Menu mapMenu = new Menu(ChangeMapPromptHandler);
+	Menu mapMenu = new Menu(ChangeMapMenuHandler);
 	mapMenu.SetTitle("Map reload is required.");
 	mapMenu.AddItem("1", "Stay on this map");
 	mapMenu.AddItem("2", "Load different map");
 	mapMenu.AddItem("3", "Do nothing");
-	DisplayMenu(mapMenu, client, 9999);
+	DisplayMenu(mapMenu, client, 9999);	
 }
 
-public int ChangeMapPromptHandler(Menu menu, MenuAction action, int client, int selection) {
+// Responds to the Change Map menu prompt
+public int ChangeMapMenuHandler(Menu menu, MenuAction action, int client, int selection) {
 	if(action == MenuAction_Select) {
 		switch(selection) {
 			case 0: {
 				//stay
-				PrintToServer("[GM] Restarting map!");
-				ServerCommand("restart");
+				char[] map = "";
+				GetCurrentMap(map, 64);
+				PrintToServer("[GM] Calling changelevel %s", map);
+				ServerCommand("changelevel %s", map);
 			}
 			case 1: {
 				// change
@@ -137,11 +176,4 @@ public int ChangeMapPromptHandler(Menu menu, MenuAction action, int client, int 
 			}
 		}
 	}
-}
-
-char[] currentMap() {
-	char[] buffer = "";
-	GetCurrentMap(buffer, 64);
-	PrintToServer("[GM] GetCurrentMap returned: %s", buffer);
-	return buffer;
 }
