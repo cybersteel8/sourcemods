@@ -13,7 +13,7 @@ public void OnPluginStart() {
 	RegConsoleCmd("sm_gm", Command_Gamechange);
 }
 
-// syntax is !gm <gamemode> <map>
+// syntax is !gm <gamemode> <mapname>
 public Action Command_Gamechange(int client, int args) {
 	char[] buffer = "";
 	if(args > 0) {
@@ -47,16 +47,16 @@ public Action Command_Gamechange(int client, int args) {
 		if(args > 1) {
 			char[] buf2 = "";
 			char[] map = "";
-			GetCmdArg(2, buf2, 16);
+			GetCmdArg(2, buf2, 24);
 			if(StrEqual(buf2, "stay", false)) {
 				PrintToServer("[GM] Staying on map!");
-				GetCurrentMap(map, 64);
+				GetCurrentMap(map, 24);
 			} else {
 				PrintToServer("[GM] Changing to %s", buf2);
-				strcopy(map, 16, buf2);
+				strcopy(map, 24, buf2);
 			}
 			PrintToServer("[GM] Calling changelevel %s", map);
-			ServerCommand("changelevel %s", map);	
+			ServerCommand("changelevel %s", map);
 		} else {
 			// Map not provided, display changelevel menu
 			ChangeMapMenu(client);
@@ -80,6 +80,7 @@ public void ChangeModeMenu(client) {
 	modeMenu.AddItem("4", "Competitive");
 	modeMenu.AddItem("5", "Deathmatch");
 	modeMenu.AddItem("6", "Danger Zone");
+	modeMenu.AddItem("7", "Cancel");
 	DisplayMenu(modeMenu, client, 9999);
 }
 
@@ -87,11 +88,18 @@ public void ChangeModeMenu(client) {
 public int ChangeModeMenuHandler(Menu menu, MenuAction action, int client, int selection) {
 	if(action == MenuAction_Select) {
 		PrintToServer("[GM] Menu option %d chosen", selection);
-		SetGameMode(selection, client);
+		if(selection < 6) { // Menu Index 6 is Cancel
+			SetGameMode(selection, client);
+			if(selection < 5) {
+				// This must be called here so it only shows after the user has selected an option in the previous menu
+				// It is assumed that if the user needed the ChangeModeMenu they must need the ChangeMapMenu too.
+				ChangeMapMenu(client);
+			} else {
+				// If Danger Zone was selected, don't show menu just change the map immediately
+				ServerCommand("changelevel dz_blacksite");
+			}
+		}
 	}
-	// This must be called here so it only shows after the user has selected an option in the previous menu
-	// It is assumed that if the user needed the ChangeModeMenu they must need the ChangeMapMenu too.
-	ChangeMapMenu(client);
 }
 
 // Changes the cvars based on the gamemode provided
@@ -135,8 +143,6 @@ public void SetGameMode(int mode, int client) {
 			PrintToServer("[GM] Changing gamemode to Danger Zone...");
 			cvGameType.IntValue = 6;
 			cvGameMode.IntValue = 0;
-			ServerCommand("changelevel dz_blacksite");
-			return;
 		}
 		default: {
 			return;
