@@ -80,7 +80,6 @@ public void ChangeModeMenu(client) {
 	modeMenu.AddItem("4", "Competitive");
 	modeMenu.AddItem("5", "Deathmatch");
 	modeMenu.AddItem("6", "Danger Zone");
-	modeMenu.AddItem("7", "Cancel");
 	DisplayMenu(modeMenu, client, 9999);
 }
 
@@ -88,16 +87,14 @@ public void ChangeModeMenu(client) {
 public int ChangeModeMenuHandler(Menu menu, MenuAction action, int client, int selection) {
 	if(action == MenuAction_Select) {
 		PrintToServer("[GM] Menu option %d chosen", selection);
-		if(selection < 6) { // Menu Index 6 is Cancel
-			SetGameMode(selection, client);
-			if(selection < 5) {
-				// This must be called here so it only shows after the user has selected an option in the previous menu
-				// It is assumed that if the user needed the ChangeModeMenu they must need the ChangeMapMenu too.
-				ChangeMapMenu(client);
-			} else {
-				// If Danger Zone was selected, don't show menu just change the map immediately
-				ServerCommand("changelevel dz_blacksite");
-			}
+		SetGameMode(selection, client);
+		if(selection < 5) {
+			// This must be called here so it only shows after the user has selected an option in the previous menu
+			// It is assumed that if the user needed the ChangeModeMenu they must need the ChangeMapMenu too.
+			ChangeMapMenu(client);
+		} else {
+			// If Danger Zone was selected, don't show menu just change the map immediately
+			ServerCommand("changelevel dz_blacksite");
 		}
 	}
 }
