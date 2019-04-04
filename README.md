@@ -24,11 +24,11 @@ Obtain my mod from the Releases section of this repository, and place the .smx f
 `sm plugins list` should have the mod you've installed listed amongst the others.
 
 ## Gamechange
-`!gm [casual|wingman|armsrace|competitive|deathmatch|dangerzone]`
+`!gm [casual|wingman|armsrace|competitive|deathmatch|dangerzone] [stay|<map-name>`
 
 `!gm` with no parameters will provide a menu of all the game modes currently supported for switching to. Interact with this by pressing a number on your keyboard that corresponds to the menu item on the screen. Otherwise, type in the game mode directly and skip the menu selection.
 
-Both methods will bring up a prompt informing you that a map reload is required. This is always the case when changing game mode, otherwise CSGO will not correctly change the mode. You have the opportunity to reload the current map, or to change to a different map.
+After a gamemode is selected, this mod will bring up a prompt informing you that a map reload is required. This is always the case when changing game mode, otherwise CSGO will not correctly change the mode. You have the opportunity to reload the current map, or to change to a different map. You can shortcut this menu by providing the parameter `stay` or a map name in this position.
 Note: If you choose to play "Danger Zone" then dz_blacksite will automatically load, as it is (currently) the only supported map.
 
 Choosing to change map will engage the `.map` command from the `csgo-practice-mode` mod and you will proceed with his functionality to change the map. Refer to his documentation for further customization on the map list and choices.
@@ -38,3 +38,15 @@ Choosing to change map will engage the `.map` command from the `csgo-practice-mo
 `!demo start|stop`
 
 Both commands work the same. This will send `start` and `stop` commands the GOTV bot to begin and halt recording (`tv_record` and `tv_stoprecord` commands respectively). The demos are saved in your `csgo` folder with the filename `psy_gotv_<unix-timestamp>.dem`.
+
+## CMDS
+`!cmd [kickbots | roundtime <minutes> | restartgame | endwarmup]`
+
+This plugin simply pipes particular commands from the in-game chat to the server, essentially allowing clients to perform serverside commands.
+
+Chat Command | Server command
+---|---
+`kickbots` | `bot_kick`
+`roundtime` | `mp_roundtime; mp_roundtime_defuse; mp_roundtime_hostage`
+`restartgame` | `mp_restartgame 5`
+`endwarmup` | `mp_warmup_end`
