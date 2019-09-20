@@ -31,13 +31,16 @@ public Action Command_CmdPipe(int client, int args) {
 		else if(StrEqual(buffer, "endwarmup", false)) {
 			MpWarmupEnd();
 		}
+		else if(StrEqual(buffer, "rethrow", false)) {
+			Rethrow(client);
+		}
 		else {
 			PrintToChat(client, "[CMD] Invalid Argument: %s", buffer);
 			PrintToServer("[CMD] Invalid Argument: %s", buffer);
 		}
 	} else {
-		PrintToChat(client, "[CMD] Possible commands: kickbots | roundtime [minutes] | restartgame | endwarmup");
-		PrintToServer("[CMD] Possible commands: kickbots | roundtime [number] | restartgame | endwarmup");
+		PrintToChat(client, "[CMD] Possible commands: kickbots | roundtime [minutes] | restartgame | endwarmup | rethrow");
+		PrintToServer("[CMD] Possible commands: kickbots | roundtime [number] | restartgame | endwarmup | rethrow");
 	}
 	return Plugin_Handled;
 }
@@ -69,4 +72,16 @@ public void MpWarmupEnd() {
 	ServerCommand("mp_warmup_end");
 	PrintToChatAll("[CMD] Warmup ended.");
 	PrintToServer("[CMD] Warmup ended.");
+}
+
+public void Rethrow(int client) {
+	ConVar cvCheats = FindConVar("sv_cheats");
+	int svCheats = cvCheats.IntValue;
+	if(svCheats < 1) {
+		PrintToChat(client, "[CMD] Rethrow requires sv_cheats to be enabled")
+	} else {
+		ServerCommand("sv_rethrow_last_grenade");
+		PrintToChatAll("[CMD] Rethrowing last grenade!");
+		PrintToServer("[CMD] Rethrowing last grenade!");
+	}
 }
