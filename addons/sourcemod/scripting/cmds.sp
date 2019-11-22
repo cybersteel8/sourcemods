@@ -40,7 +40,7 @@ public Action Command_CmdPipe(int client, int args) {
 		}
 	} else {
 		PrintToChat(client, "[CMD] Possible commands: kickbots | roundtime [minutes] | restartgame | endwarmup | rethrow");
-		PrintToServer("[CMD] Possible commands: kickbots | roundtime [number] | restartgame | endwarmup | rethrow");
+		PrintToServer("[CMD] Possible commands: kickbots | roundtime [minutes] | restartgame | endwarmup | rethrow");
 	}
 	return Plugin_Handled;
 }
