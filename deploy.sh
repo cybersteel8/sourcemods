@@ -1,4 +1,9 @@
 #!/bin/bash
+if [ -z "$CSGO_PATH" ]; then
+  echo "Set CSGO_PATH before deploying."
+  exit 1
+fi
+
 echo ""
 cp addons/sourcemod/scripting/gamechange.sp $CSGO_PATH/addons/sourcemod/scripting
 echo "Copied gamechange.sp"
