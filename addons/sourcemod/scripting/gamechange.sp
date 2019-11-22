@@ -1,15 +1,18 @@
 #include <sourcemod>
 #include <cstrike>
 
+ArrayList mapList;
+
 public Plugin myinfo = {
 	name = "Gamemode Changer",
 	author = "cyberstee8",
 	description = "Allows clients to change gamemode",
-	version = "0.5.0",
+	version = "0.6.0",
 	url = "https://github.com/cybersteel8/sourcemods/"
 };
 
 public void OnPluginStart() {
+	mapList = new ArrayList(PLATFORM_MAX_PATH + 1);
 	RegConsoleCmd("sm_gm", Command_Gamechange);
 }
 
@@ -155,7 +158,7 @@ public void ChangeMapMenu(client) {
 	mapMenu.AddItem("1", "Stay on this map");
 	mapMenu.AddItem("2", "Load different map");
 	mapMenu.AddItem("3", "Do nothing");
-	DisplayMenu(mapMenu, client, 9999);	
+	DisplayMenu(mapMenu, client, 9999);
 }
 
 // Responds to the Change Map menu prompt
@@ -171,12 +174,55 @@ public int ChangeMapMenuHandler(Menu menu, MenuAction action, int client, int se
 			}
 			case 1: {
 				// change
-				PrintToServer("[GM] Displaying sm_practicemap menu to client");
-				ClientCommand(client, "sm_practicemap"); // https://github.com/splewis/csgo-practice-mode
+				PrintToServer("[GM] Displaying maplist menu to client");
+				ShowMapListMenu(client);
 			}
 			case 2: {
 				// do nothing
 			}
 		}
+	}
+}
+
+public void ShowMapListMenu(client) {
+	char filepath[PLATFORM_MAX_PATH];
+	BuildPath(Path_SM, filepath, sizeof(filepath), "configs/maplist.cfg");
+
+	KeyValues kv = new KeyValues("maps");
+	if (!kv.ImportFromFile(filepath)) {
+		PrintToServer("Failed to import keyvalue from practice config file \"%s\"", filepath);
+		delete kv;
+		return;
+	}
+
+	char mapEntry[PLATFORM_MAX_PATH + 1];
+	if(kv.JumpToKey("maps")) {
+		if (kv.GotoFirstSubKey(false)) {
+			do {
+				kv.GetSectionName(mapEntry, sizeof(mapEntry));
+				mapList.PushString(mapEntry);
+			} while (kv.GotoNextKey(false));
+		}
+		kv.GoBack();
+	}
+
+	Menu mapMenu = new Menu(ChangeMapFromListHandler);
+	mapMenu.SetTitle("Choose a map to load");
+	for (int i = 0; i < mapList.Length; i++) {
+		char mapName[PLATFORM_MAX_PATH];
+		char menuPosition[PLATFORM_MAX_PATH];
+		mapList.GetString(i, mapName, sizeof(mapName));
+		IntToString(i + 1, menuPosition, sizeof(menuPosition));
+		mapMenu.AddItem(menuPosition, mapName);
+	}
+	mapMenu.Display(client, 9999);
+
+}
+
+public int ChangeMapFromListHandler(Menu menu, MenuAction action, int client, int selection) {
+	if(action == MenuAction_Select) {
+		char map[PLATFORM_MAX_PATH];
+		mapList.GetString(selection, map, sizeof(map));
+		ServerCommand("changelevel %s", map);
 	}
 }
