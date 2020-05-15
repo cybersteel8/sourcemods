@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Gamechange: Removed dependency on splewis' csgo-practice-mod. Internal maplist file and map changing mechanisms now.
 ### Fixed
-- My name. [#22](https://github.com/cybersteel8/sourcemods/pull/23) Thanks @djmattyg007 for reminding me how to spell my name.
+- My name. [#22](https://github.com/cybersteel8/sourcemods/pull/22) Thanks @djmattyg007 for reminding me how to spell my name.
 
 ## [0.5.0] - 2019-03-28
 ### Added
