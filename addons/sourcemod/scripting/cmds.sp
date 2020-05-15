@@ -34,13 +34,19 @@ public Action Command_CmdPipe(int client, int args) {
 		else if(StrEqual(buffer, "rethrow", false)) {
 			Rethrow(client);
 		}
+		else if(StrEqual(buffer, "pause", false)) {
+			MpPause();
+		}
+		else if(StrEqual(buffer, "unpause", false)) {
+			MpUnpause();
+		}
 		else {
 			PrintToChat(client, "[CMD] Invalid Argument: %s", buffer);
 			PrintToServer("[CMD] Invalid Argument: %s", buffer);
 		}
 	} else {
-		PrintToChat(client, "[CMD] Possible commands: kickbots | roundtime [minutes] | restartgame | endwarmup | rethrow");
-		PrintToServer("[CMD] Possible commands: kickbots | roundtime [minutes] | restartgame | endwarmup | rethrow");
+		PrintToChat(client, "[CMD] Possible commands: kickbots | roundtime [minutes] | restartgame | endwarmup | rethrow | pause | unpause");
+		PrintToServer("[CMD] Possible commands: kickbots | roundtime [minutes] | restartgame | endwarmup | rethrow | pause | unpause");
 	}
 	return Plugin_Handled;
 }
@@ -84,4 +90,16 @@ public void Rethrow(int client) {
 		PrintToChatAll("[CMD] Rethrowing last grenade!");
 		PrintToServer("[CMD] Rethrowing last grenade!");
 	}
+}
+
+public void MpPause() {
+	ServerCommand("mp_pause_match");
+	PrintToChatAll("[CMD] Match paused.");
+	PrintToServer("[CMD] Match paused.");
+}
+
+public void MpUnpause() {
+	ServerCommand("mp_unpause_match");
+	PrintToChatAll("[CMD] Match unpaused.");
+	PrintToServer("[CMD] Match unpaused.");
 }
