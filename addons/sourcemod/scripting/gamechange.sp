@@ -5,7 +5,7 @@ ArrayList mapList;
 
 public Plugin myinfo = {
 	name = "Gamemode Changer",
-	author = "cyberstee8",
+	author = "cybersteel8",
 	description = "Allows clients to change gamemode",
 	version = "0.6.0",
 	url = "https://github.com/cybersteel8/sourcemods/"

@@ -3,7 +3,7 @@
 
 public Plugin myinfo = {
 	name = "Command Pipe",
-	author = "cyberstee8",
+	author = "cybersteel8",
 	description = "Allows clients to execute server commands",
 	version = "0.3.0",
 	url = "https://github.com/cybersteel8/sourcemods/"
