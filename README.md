@@ -33,6 +33,14 @@ Note: If you choose to play "Danger Zone" then dz_blacksite will automatically l
 
 Choosing to change map will engage the `.map` command from the `csgo-practice-mode` mod and you will proceed with his functionality to change the map. Refer to his documentation for further customization on the map list and choices.
 
+### Aliases
+
+Some gamemodes have shorter aliases you can use:
+
+- Competitive: 'comp'
+- Deathmatch: 'dm'
+- Danger Zone: 'dz'
+
 ## GOTVRec
 `!rec start|stop`
 `!demo start|stop`

@@ -40,7 +40,13 @@ public Action Command_Gamechange(int client, int args) {
 		else if(StrEqual(buffer, "deathmatch", false)) {
 			SetGameMode(4, client);
 		}
+		else if(StrEqual(buffer, "dm", false)) {
+			SetGameMode(4, client);
+		}
 		else if(StrEqual(buffer, "dangerzone", false)) {
+			SetGameMode(5, client);
+		}
+		else if(StrEqual(buffer, "dz", false)) {
 			SetGameMode(5, client);
 		}
 		else {
