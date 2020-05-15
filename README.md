@@ -33,6 +33,14 @@ Note: If you choose to play "Danger Zone" then dz_blacksite will automatically l
 
 Choosing to change map will engage the `.map` command from the `csgo-practice-mode` mod and you will proceed with his functionality to change the map. Refer to his documentation for further customization on the map list and choices.
 
+### Aliases
+
+Some gamemodes have shorter aliases you can use:
+
+- Competitive: 'comp'
+- Deathmatch: 'dm'
+- Danger Zone: 'dz'
+
 ## GOTVRec
 `!rec start|stop`
 `!demo start|stop`
@@ -40,9 +48,9 @@ Choosing to change map will engage the `.map` command from the `csgo-practice-mo
 Both commands work the same. This will send `start` and `stop` commands the GOTV bot to begin and halt recording (`tv_record` and `tv_stoprecord` commands respectively). The demos are saved in your `csgo` folder with the filename `psy_gotv_<unix-timestamp>.dem`.
 
 ## CMDS
-`!cmd [kickbots | roundtime <minutes> | restartgame | endwarmup]`
+`!cmd [kickbots | roundtime <minutes> | restartgame | endwarmup | rethrow | pause | unpause]`
 
-This plugin simply pipes particular commands from the in-game chat to the server, essentially allowing clients to perform serverside commands.
+This plugin simply pipes particular commands from the in-game chat to the server, essentially allowing clients to perform serverside commands. These are the available commands:
 
 Chat Command | Server command
 ---|---
@@ -50,3 +58,6 @@ Chat Command | Server command
 `roundtime` | `mp_roundtime; mp_roundtime_defuse; mp_roundtime_hostage`
 `restartgame` | `mp_restartgame 5`
 `endwarmup` | `mp_warmup_end`
+`rethrow` | `sv_rethrow_last_grenade`
+`pause` | `mp_pause_match`
+`unpause` | `mp_unpause_match`
