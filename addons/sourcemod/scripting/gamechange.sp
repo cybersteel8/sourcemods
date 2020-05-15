@@ -34,6 +34,9 @@ public Action Command_Gamechange(int client, int args) {
 		else if(StrEqual(buffer, "competitive", false)) {
 			SetGameMode(3, client);
 		}
+		else if(StrEqual(buffer, "comp", false)) {
+			SetGameMode(3, client);
+		}
 		else if(StrEqual(buffer, "deathmatch", false)) {
 			SetGameMode(4, client);
 		}
