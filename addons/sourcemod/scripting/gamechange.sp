@@ -7,7 +7,7 @@ public Plugin myinfo = {
 	name = "Gamemode Changer",
 	author = "cybersteel8",
 	description = "Allows clients to change gamemode",
-	version = "0.6.0",
+	version = "0.7.0",
 	url = "https://github.com/cybersteel8/sourcemods/"
 };
 
@@ -18,10 +18,10 @@ public void OnPluginStart() {
 
 // syntax is !gm <gamemode> <mapname>
 public Action Command_Gamechange(int client, int args) {
-	char[] buffer = "";
+	char buffer[32];
 	if(args > 0) {
 		// Check if user provided gamemode
-		GetCmdArg(1, buffer, 16);
+		GetCmdArg(1, buffer, sizeof(buffer));
 		if(StrEqual(buffer, "casual", false)) {
 			SetGameMode(0, client);
 		}
@@ -57,24 +57,23 @@ public Action Command_Gamechange(int client, int args) {
 
 		// Check if user also provided map choice
 		if(args > 1) {
-			char[] buf2 = "";
-			char[] map = "";
-			GetCmdArg(2, buf2, 24);
-			if(StrEqual(buf2, "stay", false)) {
+			char buffer2[32];
+			GetCmdArg(2, buffer2, sizeof(buffer2));
+			if(StrEqual(buffer2, "stay", false)) {
+				char map[32];
 				PrintToServer("[GM] Staying on map!");
-				GetCurrentMap(map, 24);
+				GetCurrentMap(map, sizeof(map));
+				ServerCommand("changelevel %s", map);
 			} else {
-				PrintToServer("[GM] Changing to %s", buf2);
-				strcopy(map, 24, buf2);
+				PrintToServer("[GM] Changing to %s", buffer2);
+				ServerCommand("changelevel %s", buffer2);
 			}
-			PrintToServer("[GM] Calling changelevel %s", map);
-			ServerCommand("changelevel %s", map);
 		} else {
-			// Map not provided, display changelevel menu
+			PrintToServer("Map not provided, display changelevel menu")
 			ChangeMapMenu(client);
 		}
 	} else {
-		// Gamemode not provided, display gamechange menu
+		PrintToServer("Gamemode not provided, display gamechange menu")
 		// mapchange menu is called inside the handler
 		ChangeModeMenu(client);
 	}
@@ -176,8 +175,8 @@ public int ChangeMapMenuHandler(Menu menu, MenuAction action, int client, int se
 		switch(selection) {
 			case 0: {
 				//stay
-				char[] map = "";
-				GetCurrentMap(map, 64);
+				char map[32];
+				GetCurrentMap(map, sizeof(map));
 				PrintToServer("[GM] Calling changelevel %s", map);
 				ServerCommand("changelevel %s", map);
 			}
@@ -225,7 +224,6 @@ public void ShowMapListMenu(client) {
 		mapMenu.AddItem(menuPosition, mapName);
 	}
 	mapMenu.Display(client, 9999);
-
 }
 
 public int ChangeMapFromListHandler(Menu menu, MenuAction action, int client, int selection) {
